@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 function NavBar() {
   return (
     <div className=''>
-        <div className='flex justify-between mx-10'>
+        <div className='flex justify-between mx-10 py-6'>
             <div className='flex gap-10'>
                 <img src={logo} alt='company logo' 
                 className='bg-white' />
@@ -19,7 +19,7 @@ function NavBar() {
                     <input type="text" name="search" placeholder="Search Products"
                     aria-label="Search talk"
                     class="pr-3 pl-10 py-2 font-semibold placeholder-gray-500
-                    text-black rounded-2xl border-none ring-2 ring-gray-300
+                    text-black rounded-md border-none ring-2 ring-gray-300
                     focus:ring-gray-500 focus:ring-2" />
 
                 </div>
