@@ -48,8 +48,8 @@ function App() {
   return (
     <div>
       <NavBar />
-      <div className='bg-gray-400'> 
-        <DataTable className='mx-6 w-[100%]'
+      <div className='bg-gray-400 mt-10'> 
+        <DataTable className='mx-6 w-[100%] mt-5'
           title = "Products List"
           columns={column}
           data={state.data}
