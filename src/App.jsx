@@ -3,12 +3,19 @@ import NavBar from './NavBar'
 import './App.css'
 import DataTable from './components/data-table';
 import { columns } from './components/columns';
-import { ApiContext} from './ApiContext';
+// import { ApiContext} from './ApiContext';
+import { useQuery } from '@tanstack/react-query';
 
 function App() {
-  const { state } = useContext(ApiContext);
+  // const { state } = useContext(ApiContext);
   const [pageSize, setPageSize] = useState(10);
 
+  const { data, isLoading, isError, error } = useQuery({
+    queryFn: () => fetchSupplier({}),
+    queryKey: ['products']
+  })
+
+  console.log(data, '-> data')
 
 
   return (
