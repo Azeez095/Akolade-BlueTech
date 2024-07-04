@@ -10,46 +10,58 @@ function App() {
     {
       name: "Image",
       selector : row => <img src={row.Image_1} alt="Product Image" className='w-[100px]' />,
-      width: 'w-5'
+      width: '150px'
     },
     {
       name: "SKU",
-      selector : row => row.SKU,
+      selector : row => <span className="w-2 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.SKU}</span>,
+      width: '100px'
     },
     {
       name: "Name",
-      selector : row => row.Name,
-      style: {
-        margin: '20px', // Example of adding margin to the header
-      }
+      selector : row => <span className="w-4 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.Name}</span>,
+      width: '150px'
     },
     {
       name: "Title",
-      selector : row => row.Title,
+      selector : row => <span className="w-7 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.Title}</span>,
+      width: '150px'
     },
     {
       name: "Description",
-      selector : row => row.Description,
+      selector: row => <span className="overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.Description}</span>,
+      width: '350px'
     },
     {
       name: "Brand",
-      selector : row => row.Brand,
+      selector : row => <span className="w-2 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.Brand}</span>,
+      width: '100px'
     },
     {
       name: "Cost Price",
-      selector : row => row['Cost Price'],
+      selector : row =><span className="w-4 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row['Cost Price']}</span>,
+      width: '150px'
     },
     {
       name: "Quantity",
-      selector : row => row.Quantity,
+      selector : row => <span className="w-2 overflow-hidden 
+      whitespace-normal text-ellipsis mb-4">{row.Quantity}</span>,
+      width: '150px'
     },
    ]
+
+  
 
   return (
     <div>
       <NavBar />
-      <div className='bg-gray-400 mt-10'> 
-        <DataTable className='mx-6 w-[100%] mt-5'
+        <DataTable className='mx-auto w-[50vw]'
           title = "Products List"
           columns={column}
           data={state.data}
@@ -57,7 +69,7 @@ function App() {
           selectableRows
           responsive
           />
-      </div>
+      
     </div>
   )
 }
