@@ -33,49 +33,50 @@ export const columns = [
             className="translate-y-[2px]"
           />
           
-          <p>{row.id}</p>
+          <p>{Number(row.id)+1}</p>
         </div>
       ),
     },
     {
-      accessorKey: 'image',
+      accessorKey: 'Image_1',
       header: 'Image',
-      key: 'image',
+      key: 'Image_1',
+      cell: ({ row }) => <img src={row.original.Image_1} className="w-[50px] h-[50px] object-cover" />,
     },
     {
-      accessorKey: 'sku',
+      accessorKey: 'SKU',
       header: 'SKU',
-      key: 'sku',
+      key: 'SKU',
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'Name',
       header: 'Name',
-      key: 'name',
+      key: 'Name',
     },
     {
-      accessorKey: 'title',
+      accessorKey: 'Title',
       header: 'Title',
-      key: 'title',
+      key: 'Title',
     },
     {
-      accessorKey: 'description',
+      accessorKey: 'Description',
       header: 'Description',
-      key: 'description',
+      key: 'Description',
     },
     {
-      accessorKey: 'brand',
+      accessorKey: 'Brand',
       header: 'Brand',
-      key: 'brand',
+      key: 'Brand',
     },
     {
-      accessorKey: 'price',
+      accessorKey: 'Cost Price',
       header: 'Cost Price',
-      key: 'price',
+      key: 'Cost Price',
     },
     {
-      accessorKey: 'quantity',
+      accessorKey: 'Quantity',
       header: 'Quantity',
-      key: 'quantity',
+      key: 'Quantity',
     },
   ];
   

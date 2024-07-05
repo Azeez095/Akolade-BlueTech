@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { toast } from '@/components/ui/use-toast';
 
 const TanstackProvider = ({ children }) => {
   const [queryClient] = useState(
@@ -11,23 +9,13 @@ const TanstackProvider = ({ children }) => {
           queries: {
             refetchOnWindowFocus: false,
           },
-          onError: (error) => {
-            if (error.response.status === 401) {
-              // Can handle 401 error here as well
-              toast({
-                title: "Ooops! An error occured",
-                description: 'User not authorized',
-                variant: "destructive",
-              })
-            };
-          },
         },
       })
   );
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 };

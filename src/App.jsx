@@ -3,20 +3,23 @@ import NavBar from './NavBar'
 import './App.css'
 import DataTable from './components/data-table';
 import { columns } from './components/columns';
-// import { ApiContext} from './ApiContext';
 import { useQuery } from '@tanstack/react-query';
+import { fetchSupplier } from './apis';
+import Loading from './components/ui/loading';
 
 function App() {
   // const { state } = useContext(ApiContext);
   const [pageSize, setPageSize] = useState(10);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => fetchSupplier({}),
+    queryFn: () => fetchSupplier({supplier: 'FragranceX', first: 0, last: 10}),
     queryKey: ['products']
   })
 
-  console.log(data, '-> data')
+  const load = true;
 
+  console.log(data, '-> data')
+  // http://3.88.1.181:8000/products/public/catalog?supplier=FragranceX&first=0&last=10
 
   return (
     <div className='space-y-2 space-x-8'>
@@ -68,14 +71,17 @@ function App() {
     </div> 
 
     <div className='w-[85%]'>
+{load ? <Loading /> : (
 
-      <DataTable
-          columns={columns}
-          data={[]}
-          pageSize={pageSize}
-          dataLength={10}
-          handleChangePageSize={setPageSize}
-        />
+            <DataTable
+                columns={columns}
+                data={data}
+                pageSize={pageSize}
+                dataLength={10}
+                handleChangePageSize={setPageSize}
+              />
+)}
+
     </div>
 </div>
       
