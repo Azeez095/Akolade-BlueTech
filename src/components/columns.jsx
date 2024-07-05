@@ -33,7 +33,7 @@ export const columns = [
             className="translate-y-[2px]"
           />
           
-          <p>{Number(row.id)+1}</p>
+          <p>{Number(row.id)+1}.</p>
         </div>
       ),
     },
@@ -52,11 +52,13 @@ export const columns = [
       accessorKey: 'Name',
       header: 'Name',
       key: 'Name',
+      cell: ({ row }) => <p>{row.original.Name || '-'}</p>,
     },
     {
       accessorKey: 'Title',
       header: 'Title',
       key: 'Title',
+      cell: ({ row }) => <p>{row.original.Title || '-'}</p>,
     },
     {
       accessorKey: 'Description',

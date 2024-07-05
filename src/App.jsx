@@ -6,81 +6,102 @@ import { columns } from './components/columns';
 import { useQuery } from '@tanstack/react-query';
 import { fetchSupplier } from './apis';
 import Loading from './components/ui/loading';
+import { handleMinChange, handleMaxChange } from './utils'
+import {AppContext} from './app-provider'
 
 function App() {
-  // const { state } = useContext(ApiContext);
-  const [pageSize, setPageSize] = useState(10);
+  const { 
+    selectedSupplier,
+    qtyMin,
+    qtyMax,
+    priceMin,
+    priceMax,
+    errorQtyInput,
+    errorPriceInput,
+    qtyRange,
+    priceRange,
+    setSelectedSupplier,
+    setQtyMin,
+    setQtyMax,
+    setPriceMin,
+    setPriceMax,
+    setErrorQtyInput,
+    setErrorPriceInput,
+    setQtyRange,
+    search,
+    setPriceRange } = useContext(AppContext)
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => fetchSupplier({supplier: 'FragranceX', first: 0, last: 10}),
-    queryKey: ['products']
-  })
+    queryFn: () => fetchSupplier({supplier: selectedSupplier, first: 0, last: 50, search, ...qtyRange, ...priceRange }),
+    queryKey: ['products', selectedSupplier, qtyRange, priceRange, search]
+  });
 
-  const load = true;
+  const suppliers = ['FragranceX', 'FragranceNet', 'Morris Costumes'];
 
-  console.log(data, '-> data')
-  // http://3.88.1.181:8000/products/public/catalog?supplier=FragranceX&first=0&last=10
+  console.log(priceRange);
+
+  const handleSetQtyRange = () => {
+    setQtyRange({ Quantity_gte: qtyMin, Quantity_lte: qtyMax })
+  }
+  const handleSetPriceRange = () => {
+    setPriceRange({ 'Cost Price_gte': qtyMin, 'Cost Price_lte': qtyMax })
+  }
+
+  if (isError) return <p>Sorry, an error occured from the server</p>
 
   return (
     <div className='space-y-2 space-x-8'>
       <NavBar />
 
-<div className='flex items-start'>
-    <div className='mt-4 w-[15%] space-y-6 border-r h-screen'>
+    <div className='flex items-start'>
+    <div className='mt-4 lg:w-[15%] w-[25%] space-y-6 border-r h-screen'>
       <p>Filters:</p>
       <div className='space-y-2'>
         <p className='font-bold'>Suppliers:</p>
 
-        <div className='space-x-2'>
-          <input type="radio" id="FragranceX" name="suppliers" value='FragranceX' />
-          <label for="FragranceX">FragranceX</label>
-        </div>
-
-        <div className='space-x-2'>
-          <input type="radio" id="FragranceNet" name="suppliers" value="FragranceNet" />
-          <label for="FragranceNet">FragranceNet</label>
-        </div>
-
-        <div className='space-x-2'>
-          <input type="radio" id="Morris Costumes" name="suppliers" value="Morris Costumes" />
-          <label for="Morris Costumes">Morris Costumes</label>
-        </div>
+      {suppliers.map((supplier) => (
+          <div className='space-x-2' key={supplier} onClick={() => setSelectedSupplier(supplier)}>
+            <input type="radio" id={supplier} name="suppliers" value={supplier}  defaultChecked={selectedSupplier === supplier} />
+            <label for={supplier}>{supplier}</label>
+          </div>
+      ))}
       </div>
 
       <div className='space-y-6'>
         <div className='space-y-2'>
           <p className='font-bold'>Quantity</p>
           <div className='flex space-x-2 items-center'>
-            <input type="number" placeholder="min" className='w-[25%] border rounded-md p-1' />
+            <input type="number" placeholder="min" value={qtyMin || ''} className='w-[25%] border rounded-md p-1' onChange={(e) => handleMinChange(e, setErrorQtyInput, qtyMax, setQtyMin)} />
             <p>-</p>
-            <input type="number" placeholder='max' className='w-[25%] border rounded-md p-1' />
-            <button className='bg-[#000] text-white px-2 rounded-md py-1'>Go</button>
+            <input type="number" placeholder='max' value={qtyMax || ''} className='w-[25%] border rounded-md p-1' onChange={(e) => handleMaxChange(e, setErrorQtyInput, qtyMin, setQtyMax)} />
+            <button className='bg-[#000] text-white px-2 rounded-md py-1 disabled:opacity-30 disabled:cursor-not-allowed' 
+            disabled={errorQtyInput || !qtyMax || !qtyMin} onClick={handleSetQtyRange}>Go</button>
           </div>
+          <p className='text-[#ED4337] text-xs'>{errorQtyInput || ''}</p>
         </div>
 
         <div className='space-y-2'>
           <p className='font-bold'>Price</p>
           <div className='flex space-x-2 items-center'>
-            <input type="number" placeholder="min" className='w-[25%] border rounded-md p-1' />
+            <input type="number" placeholder="min" value={priceMin || ''} className='w-[25%] border rounded-md p-1' onChange={(e) => handleMinChange(e, setErrorPriceInput, priceMax, setPriceMin)} />
             <p>-</p>
-            <input type="number" placeholder='max' className='w-[25%] border rounded-md p-1' />
-            <button className='bg-[#000] text-white px-2 py-1 rounded-md'>Go</button>
+            <input type="number" placeholder='max' value={priceMax || ''} className='w-[25%] border rounded-md p-1' onChange={(e) => handleMaxChange(e, setErrorPriceInput, priceMin, setPriceMax)} />
+            <button className='bg-[#000] text-white px-2 py-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed' disabled={errorPriceInput || !priceMax || !priceMin} onClick={handleSetPriceRange}>Go</button>
           </div>
+          <p className='text-[#ED4337] text-xs'>{errorPriceInput || ''}</p>
         </div>
+
+        <p className="text-sm" role="button" onClick={() => { setPriceRange(null); setQtyRange(null); setQtyMin(null); setQtyMax(null); setPriceMin(null); setPriceMax(null); }}>Reset</p>
       </div>
     </div> 
 
-    <div className='w-[85%]'>
-{load ? <Loading /> : (
-
-            <DataTable
-                columns={columns}
-                data={data}
-                pageSize={pageSize}
-                dataLength={10}
-                handleChangePageSize={setPageSize}
-              />
-)}
+    <div className='lg:w-[85%] w-[75%]'>
+        {isLoading ? <Loading /> : (
+          <DataTable
+            columns={columns}
+            data={data}
+          />
+        )}
 
     </div>
 </div>

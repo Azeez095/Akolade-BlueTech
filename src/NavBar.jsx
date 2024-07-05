@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from './assets/Logo.png'
 import { IoIosSearch } from "react-icons/io";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoPerson } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import {AppContext} from './app-provider'
 
 function NavBar() {
+    const { setSearch, search } = useContext(AppContext);
+    console.log(search);
   return (
     <div className=''>
         <div className='flex justify-between mx-10 py-6'>
@@ -20,7 +23,7 @@ function NavBar() {
                     aria-label="Search talk"
                     class="pr-3 pl-10 py-2 font-semibold placeholder-gray-500
                     text-black rounded-md border-none ring-2 ring-gray-300
-                    focus:ring-gray-500 focus:ring-2" />
+                    focus:ring-gray-500 focus:ring-2" onChange={({target}) => setSearch(target.value)} value={search} />
 
                 </div>
             </div>

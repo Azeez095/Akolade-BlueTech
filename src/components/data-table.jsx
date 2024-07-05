@@ -16,17 +16,13 @@ import {
 } from './ui/table';
 
 import { cn } from '../utils';
-// import CustomPagination from './custom-pagination';
 
 const DataTable = ({
   columns,
   data,
   className,
-  pageSize,
-  dataLength,
   handleClickRow,
   headerClassName,
-  handleChangePageSize,
 }) => {
   const table = useReactTable({
     data,
@@ -92,11 +88,6 @@ const DataTable = ({
         </Table>
       </div>
 
-      {/* <CustomPagination
-        totalCount={dataLength}
-        pageSize={pageSize}
-        handleChangePageSize={handleChangePageSize}
-      /> */}
     </div>
   );
 };
