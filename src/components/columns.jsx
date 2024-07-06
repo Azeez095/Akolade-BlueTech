@@ -9,13 +9,6 @@ export const columns = [
               aria-label="Select all"
               type='checkbox'
               className="translate-y-[2px]"
-              // checked={
-              //   table.getIsAllPageRowsSelected() ||
-              //   (table.getIsSomePageRowsSelected() && 'indeterminate')
-              // }
-              // onCheckedChange={(value) =>
-              //   table.toggleAllPageRowsSelected(!!value)
-              // }
             />
             <p>S/N</p>
           </div>
@@ -27,8 +20,6 @@ export const columns = [
           <input
             id="selectAll"
             type='checkbox'
-            // checked={row.getIsSelected()}
-            // onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
             className="translate-y-[2px]"
           />

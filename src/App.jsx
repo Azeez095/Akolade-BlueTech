@@ -9,6 +9,11 @@ import Loading from './components/ui/loading';
 import { handleMinChange, handleMaxChange } from './utils'
 import {AppContext} from './app-provider'
 
+/**
+ * Renders the main application component.
+ *
+ * @return {JSX.Element} The rendered component.
+ */
 function App() {
   const { 
     selectedSupplier,
@@ -50,11 +55,12 @@ function App() {
   if (isError) return <p>Sorry, an error occured from the server</p>
 
   return (
-    <div className='space-y-2 space-x-8'>
+    <div className='space-y-2 space-x-8 bg-gray-100'>
       <NavBar />
-
-    <div className='flex items-start'>
-    <div className='mt-4 lg:w-[15%] w-[25%] space-y-6 border-r h-screen'>
+     
+    
+    <div className='flex items-start '>
+    <div className='mt-[70px] lg:w-[15%] w-[50%] space-y-6 border-r h-screen '>
       <p>Filters:</p>
       <div className='space-y-2'>
         <p className='font-bold'>Suppliers:</p>
@@ -91,11 +97,12 @@ function App() {
           <p className='text-[#ED4337] text-xs'>{errorPriceInput || ''}</p>
         </div>
 
-        <p className="text-sm" role="button" onClick={() => { setPriceRange(null); setQtyRange(null); setQtyMin(null); setQtyMax(null); setPriceMin(null); setPriceMax(null); }}>Reset</p>
+        <p className="text-sm bg-white rounded-full w-[23%] p-2 text-center" role="button" onClick={() => { setPriceRange(null); setQtyRange(null); setQtyMin(null); setQtyMax(null); setPriceMin(null); setPriceMax(null); }}>Reset</p>
       </div>
     </div> 
 
     <div className='lg:w-[85%] w-[75%]'>
+    <h1 className='text-xl text-[#191635]'>Products List</h1>
         {isLoading ? <Loading /> : (
           <DataTable
             columns={columns}
